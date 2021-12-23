@@ -35,7 +35,7 @@ network:
 sudo virt-customize -a hirsute-server-cloudimg-amd64.img --run-command "echo '${netconf}' > /etc/netplan/01-net.yaml"
 
 # copy kernel modules
-sudo virt-customize -a hirsute-server-cloudimg-amd64.img --copy-in /lib/modules/$(uname -r):/lib/modules
+sudo virt-customize -a hirsute-server-cloudimg-amd64.img --copy-in /lib/modules/5.$(apt search linux-image 2>/dev/null | grep -v unsigned | grep gcp | cut -d"-" -f3,4 | cut -d. -f2,3 | sort -nr | head -n 1)-gcp:/lib/modules
 
 # ssh
 sudo virt-customize -a hirsute-server-cloudimg-amd64.img --run-command 'apt remove openssh-server -y && apt install openssh-server -y'
